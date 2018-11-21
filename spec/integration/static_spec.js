@@ -6,7 +6,7 @@ describe("routes: static", () => {
 
   describe("GET /", () => {
 
-    it ("should return status code 200", (done) => {
+    it ("should return status code 200", () => {
 
       request.get(base, (err, res, body) => {
 
