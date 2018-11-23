@@ -7,5 +7,6 @@ module.exports = {
     app.use(staticRoutes);
     app.use(userRoutes);
     app.use(logger('dev'));
+    
   }
 }

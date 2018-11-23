@@ -8,7 +8,6 @@ module.exports = {
   },
 
    create(req, res, next){
-     console.log(req);
      let newUser = {
        email: req.body.email, //form not sending body
        password: req.body.password,
@@ -18,7 +17,7 @@ module.exports = {
      userQueries.createUser(newUser, (err, user) => {
        if(err){
          req.flash("error", err);
-         res.redirect("/users/signup");
+         res.redirect("/users/sign_up");
        } else {
 
 

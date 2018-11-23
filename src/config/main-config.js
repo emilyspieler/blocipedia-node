@@ -5,6 +5,7 @@ const passportConfig = require("./passport-config");
 const session = require("express-session");
 const flash = require("express-flash");
 const bodyParser = require("body-parser");
+const async = require('async');
 
 module.exports = {
   init(app, express){
