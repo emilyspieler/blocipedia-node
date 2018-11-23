@@ -13,8 +13,8 @@ router.get("/users/sign_out", userController.signOut);
 
 router.get("users/sign_up", function(req, res){
 const msg = {
-  to: 'emily.spieler@loop.colum.edu',
-  from: 'emily.spieler@loop.colum.edu',
+  to: 'emilyspieler1@gmail.com',
+  from: 'no-reply@emilyspielerphotography.com',
   subject: 'Sending with SendGrid is Fun',
   text: 'and easy to do anywhere, even with Node.js',
   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
