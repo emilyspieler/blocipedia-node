@@ -1,5 +1,6 @@
 const passport = require("passport");
 const userQueries = require("../db/queries.users.js");
+const sgMail = require('@sendgrid/mail');
 
 module.exports = {
 
@@ -13,6 +14,17 @@ module.exports = {
        password: req.body.password,
        passwordConfirmation: req.body.passwordConfirmation
      };
+
+     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+     const msg = {
+       to: 'emilyspieler1@gmail.com',
+       from: 'test@example.com',
+       subject: 'Sending with SendGrid is Fun',
+       text: 'and easy to do anywhere, even with Node.js',
+       html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+     };
+     console.log(process.env.SENDGRID_API_KEY)
+     sgMail.send(msg);
 
      userQueries.createUser(newUser, (err, user) => {
        if(err){
