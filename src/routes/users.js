@@ -1,11 +1,16 @@
 const express = require("express");
 const router = express.Router();
+<<<<<<< HEAD
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+=======
+const validation = require("./validation");
+>>>>>>> slack-help
 
 const userController = require("../controllers/userController");
 
 router.get("/users/sign_up", userController.signUp);
+<<<<<<< HEAD
 router.post("/users/signUp", userController.create);
 router.get("/users/sign_in", userController.signInForm);
 router.post("/users/sign_in", userController.signUp);
@@ -22,5 +27,12 @@ const msg = {
 sgMail.send(msg);
 });
 
+=======
+router.post("/users/signUp", validation.validateUsers, userController.create);
+router.get("/users/sign_in", userController.signInForm);
+router.post("/users/sign_in", validation.validateUsers, userController.signIn);
+router.get("/users/sign_out", userController.signOut);
+
+>>>>>>> slack-help
 
 module.exports = router;
