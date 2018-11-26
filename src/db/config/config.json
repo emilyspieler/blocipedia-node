@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "username": "postgres",
+    "username": "spieldog2",
     "database": "bloccipedia-dev",
     "host": "127.0.0.1",
     "dialect": "postgres",
@@ -10,7 +10,7 @@
      "operatorsAliases": false
   },
   "test": {
-    "username": "postgres",
+    "username": "spieldog2",
     "password": null,
     "database": "bloccipedia-test",
     "host": "127.0.0.1",
