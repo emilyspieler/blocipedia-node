@@ -7,10 +7,8 @@ const flash = require("express-flash");
 const bodyParser = require("body-parser");
 const async = require('async');
 const sgMail = require('@sendgrid/mail');
-<<<<<<< HEAD
-=======
 const expressValidator = require("express-validator");
->>>>>>> slack-help
+
 
 module.exports = {
   init(app, express){
@@ -18,10 +16,7 @@ module.exports = {
     app.set("view engine", "ejs");
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(express.static(path.join(__dirname, "..", "assets")));
-<<<<<<< HEAD
-=======
     app.use(expressValidator());
->>>>>>> slack-help
     app.use(session({
      secret: process.env.cookieSecret,
      resave: false,

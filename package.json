@@ -27,11 +27,7 @@
     "async": "^2.6.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
-<<<<<<< HEAD
     "dotenv": "^5.0.0",
-=======
-    "dotenv": "^5.0.1",
->>>>>>> slack-help
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-flash": "0.0.2",

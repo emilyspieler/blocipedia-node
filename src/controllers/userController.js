@@ -1,9 +1,6 @@
 const passport = require("passport");
 const userQueries = require("../db/queries.users.js");
-<<<<<<< HEAD
-=======
 const sgMail = require('@sendgrid/mail');
->>>>>>> slack-help
 
 module.exports = {
 
@@ -18,12 +15,6 @@ module.exports = {
        passwordConfirmation: req.body.passwordConfirmation
      };
 
-<<<<<<< HEAD
-     userQueries.createUser(newUser, (err, user) => {
-       if(err){
-         req.flash("error", err);
-         res.redirect("/users/sign_up");
-=======
      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
      const msg = {
        to: 'emilyspieler1@gmail.com',
@@ -39,7 +30,6 @@ module.exports = {
        if(err){
          req.flash("error", err);
          res.redirect("/");
->>>>>>> slack-help
        } else {
 
 

@@ -15,13 +15,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     // associations can be defined here
-<<<<<<< HEAD
-=======
+
     User.hasMany(models.Wiki, {
       foreignKey: "userId",
-      as: "wikis"
+      as: "wiki"
     });
->>>>>>> slack-help
   };
   return User;
 };

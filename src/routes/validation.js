@@ -1,8 +1,6 @@
+
  module.exports = {
 
-<<<<<<< HEAD
-      
-=======
    validateUsers(req, res, next) {
   if(req.method === "POST") {
 
@@ -23,5 +21,4 @@
 }
 
 
->>>>>>> slack-help
    }
