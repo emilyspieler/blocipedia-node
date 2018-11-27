@@ -12,11 +12,11 @@ module.exports = class ApplicationPolicy {
   }
 
   _isAdmin() {
-    return this.user && this.user.role == "2";
+    return this.user && this.user.role == 2;
   }
 
   _isPremium() {
-    return this.user && this.user.role == "1";
+    return this.user && this.user.role == 1;
   }
 
  // #3
@@ -35,7 +35,7 @@ module.exports = class ApplicationPolicy {
  // #4
   edit() {
     return this.new() &&
-      this.record && (this._isOwner() || this._isAdmin() || this.isPremium() );
+      this.record && (this._isOwner() || this._isAdmin() );
   }
 
   update() {
