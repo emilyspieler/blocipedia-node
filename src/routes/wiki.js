@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
- const helper = require("../auth/helpers");
- const validation = require("./validation");
+const helper = require("../auth/helpers");
+const validation = require("./validation");
 
 const wikiController = require("../controllers/wikiController")
 

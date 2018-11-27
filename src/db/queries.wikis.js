@@ -69,37 +69,39 @@ module.exports = {
 
       updateWiki(req, updatedWiki, callback){
 
-    // #1
-         return Wiki.findById(req.params.id)
-         .then((wiki) => {
+// #1
+          return Wiki.findById(req.params.id)
+            .then((wiki) => {
 
-    // #2
-           if(!wiki){
-             return callback("Wiki not found");
-           }
+// #2
+            if(!wiki){
+            return callback("Wiki not found");
+            }
 
-    // #3
-           const authorized = new Authorizer(req.user, wiki).update();
+// #3
+        const authorized = new Authorizer(req.user, wiki).update();
 
-           if(authorized) {
 
-    // #4
-             wiki.update(updatedWiki, {
-               fields: Object.keys(updatedWiki)
-             })
-             .then(() => {
-               callback(null, wiki);
-             })
-             .catch((err) => {
-               callback(err);
-             });
-           } else {
+          if(authorized) {
 
-    // #5
-             req.flash("notice", "You are not authorized to do that.");
-             callback("Forbidden");
-           }
-         });
-       }
+// #4
+    wiki.update(updatedWiki, {
+      fields: Object.keys(updatedWiki)
+    })
+    .then(() => {
+      callback(null, wiki);
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  } else {
+
+// #5
+    req.flash("notice", "You are not authorized to do that.");
+    callback("Forbidden");
+  }
+});
+}
+
 
 }
