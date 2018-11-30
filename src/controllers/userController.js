@@ -15,17 +15,6 @@ module.exports = {
        passwordConfirmation: req.body.passwordConfirmation
      };
 
-     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-     const msg = {
-       to: 'emilyspieler1@gmail.com',
-       from: 'test@example.com',
-       subject: 'Sending with SendGrid is Fun',
-       text: 'and easy to do anywhere, even with Node.js',
-       html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-     };
-     console.log(process.env.SENDGRID_API_KEY)
-     sgMail.send(msg);
-
      userQueries.createUser(newUser, (err, user) => {
        if(err){
          req.flash("error", err);
@@ -61,5 +50,62 @@ module.exports = {
      req.logout();
      req.flash("notice", "You've successfully signed out!");
      res.redirect("/");
-   }
+   },
+
+   upgrade(req, res, next){
+     res.render("users/upgrade");
+   },
+
+   downgrade(req, res, next){
+     res.render("users/downgrade");
+   },
+
+   paymentProcess(req, res){
+     var token = req.body.stripeToken;
+     var chargeAmount = req.body.chargeAmount;
+     var charge = stripe.charges.create({
+       amount: chargeAmount,
+       currency: "usd",
+       source: token
+     },
+     function (err, charge) {
+       if(err & err.type === "StripeCardError"){
+         console.log("your card was declined");
+       }
+      });
+     res.redirect('/paymentsuccess');
+   },
+
+   downgradeForm(req, res, next){
+      let newDowngrade = {
+         name: req.body.name, //form not sending body
+         email: req.body.email,
+         description: req.body.description
+       };
+
+       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+       const msg = {
+         to: 'emilyspieler1@gmail.com',
+         from: 'test@example.com',
+         subject: 'Someone Downgraded',
+         text: 'Please refund their credit card',
+         html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+       };
+       console.log(process.env.SENDGRID_API_KEY)
+       sgMail.send(msg);
+
+       userQueries.createDowngrade(newDowngrade, (err, user) => {
+         if(err){
+           req.flash("error", err);
+           console.log(err);
+           res.redirect("/");
+         } else {
+
+           passport.authenticate("local")(req, res, () => {
+             req.flash("notice", "You've successfully Downgraded!");
+             res.redirect("/");
+           })
+         }
+       });
+}
 }

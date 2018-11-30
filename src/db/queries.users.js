@@ -1,4 +1,5 @@
 const User = require("./models").User;
+const Downgrade = require("./models").Downgrade;
 const bcrypt = require("bcryptjs");
 
 module.exports = {
@@ -16,6 +17,21 @@ module.exports = {
     })
     .then((user) => {
       callback(null, user);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
+
+  createDowngrade(newDowngrade, callback){
+
+    return Downgrade.create({
+      name: newDowngrade.name,
+      email: newDowngrade.email,
+      description: newDowngrade.description
+    })
+    .then((downgrade) => {
+      callback(null, downgrade);
     })
     .catch((err) => {
       callback(err);
