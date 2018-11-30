@@ -12,5 +12,3 @@ router.get("/users/sign_out", userController.signOut);
 router.get("/users/upgrade", userController.upgrade);
 router.get("/users/downgrade", userController.downgrade);
 router.post("/users/downgrade", userController.downgradeForm);
-
-module.exports = router;

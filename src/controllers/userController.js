@@ -2,6 +2,7 @@ const passport = require("passport");
 const userQueries = require("../db/queries.users.js");
 const sgMail = require('@sendgrid/mail');
 
+
 module.exports = {
 
   signUp(req, res, next){
@@ -74,6 +75,12 @@ module.exports = {
        }
       });
      res.redirect('/paymentsuccess');
+
+     // way 1
+     User.role = 1
+     User.save().then(() => {})
+
+
    },
 
    downgradeForm(req, res, next){
@@ -87,12 +94,17 @@ module.exports = {
        const msg = {
          to: 'emilyspieler1@gmail.com',
          from: 'test@example.com',
-         subject: 'Someone Downgraded',
+         subject:  'this is the subject',
          text: 'Please refund their credit card',
          html: '<strong>and easy to do anywhere, even with Node.js</strong>',
        };
-       console.log(process.env.SENDGRID_API_KEY)
-       sgMail.send(msg);
+          console.log(process.env.SENDGRID_API_KEY)
+          sgMail.send(msg).then( () => {
+            console.log("Successfully Sent Mail!");
+          })
+          .catch( error => {
+            console.error(error.toString());
+          });
 
        userQueries.createDowngrade(newDowngrade, (err, user) => {
          if(err){
@@ -107,5 +119,17 @@ module.exports = {
            })
          }
        });
-}
+     },
+
+    upgradeUpdate(req, res, next){
+      User.update(
+    {role: req.params.role},
+    {where: req.params.userId}
+  )
+  .then(function(rowsUpdated) {
+    res.json(rowsUpdated)
+  })
+  .catch(next)
+ }
+
 }

@@ -34,22 +34,18 @@ module.exports = {
      next();
    })
 
-
    app.get('/paysuccess', function(req, res){
      res.render('static/paysuccess', {
-
      });
    });
 
    app.get('/charge', function(req, res){
      res.render('static/charge', {
-
      });
    });
 
    app.post('/charge', function(req, res){
      res.render('static/charge', {
-
      });
    });
   }
