@@ -47,6 +47,6 @@ module.exports = {
    app.post('/charge', function(req, res){
      res.render('static/charge', {
      });
-   });
-  }
-};
+    });
+}
+}

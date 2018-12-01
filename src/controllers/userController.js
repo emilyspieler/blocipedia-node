@@ -1,6 +1,7 @@
 const passport = require("passport");
 const userQueries = require("../db/queries.users.js");
 const sgMail = require('@sendgrid/mail');
+const User = require("../db/models/").User;
 
 
 module.exports = {
@@ -53,35 +54,34 @@ module.exports = {
      res.redirect("/");
    },
 
-   upgrade(req, res, next){
-     res.render("users/upgrade");
-   },
-
    downgrade(req, res, next){
      res.render("users/downgrade");
    },
 
-   paymentProcess(req, res){
-     var token = req.body.stripeToken;
-     var chargeAmount = req.body.chargeAmount;
-     var charge = stripe.charges.create({
-       amount: chargeAmount,
-       currency: "usd",
-       source: token
-     },
-     function (err, charge) {
-       if(err & err.type === "StripeCardError"){
-         console.log("your card was declined");
-       }
-      });
-     res.redirect('/paymentsuccess');
+   upgrade(req, res, next){
+     res.render("users/upgrade");
+     User.findById(req.params.id)
+     .then(user => {
+         var stripeToken = req.body.stripeToken;
+         // Charge the user's card:
+         stripe.charges.create({
+             amount: 1500,
+               currency: "usd",
+               description: "Upgrade tp premium User",
+               source: stripeToken,
+         }, function(err, charge) {
+               user.role = 1;
+               user.save();
 
-     // way 1
-     User.role = 1
-     User.save().then(() => {})
-
-
-   },
+               req.flash("notice", "You are now a premium user!");
+             res.redirect("/");
+         });
+     })
+     .catch(err => {
+         req.flash("notice", "Error upgrading.  Please try again.");
+         res.redirect("/");
+     });
+    },
 
    downgradeForm(req, res, next){
       let newDowngrade = {
@@ -119,17 +119,5 @@ module.exports = {
            })
          }
        });
-     },
-
-    upgradeUpdate(req, res, next){
-      User.update(
-    {role: req.params.role},
-    {where: req.params.userId}
-  )
-  .then(function(rowsUpdated) {
-    res.json(rowsUpdated)
-  })
-  .catch(next)
- }
-
+     }
 }
