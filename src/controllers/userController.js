@@ -1,6 +1,8 @@
 const passport = require("passport");
 const userQueries = require("../db/queries.users.js");
 const sgMail = require('@sendgrid/mail');
+const User = require('../db/models').User;
+
 
 module.exports = {
 
@@ -72,6 +74,7 @@ module.exports = {
        if (err & err.type === "StripeCardError"){
          console.log("your card was declined");
        } else {
+         console.log("this is the user: " + user);
          user.role = 1;
          user.save();
 
@@ -117,6 +120,31 @@ module.exports = {
            })
          }
        });
-}
+},
 
-}
+      charge(req, res, next){
+          User.findById(req.params.id)
+          .then(user => {
+            var stripeToken = req.body.stripeToken;
+            // Charge the user's card:
+            stripe.charges.create({
+              amount: 1500,
+              currency: "usd",
+              description: "Upgrade tp premium User",
+              source: stripeToken,
+            }, function(err, charge) {
+              user.role = 1;
+              user.save();
+
+            req.flash("notice", "You are now a premium user!");
+            res.redirect("/");
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          req.flash("notice", "Error upgrading.  Please try again.");
+          res.redirect("/");
+        });
+      },
+
+    }
