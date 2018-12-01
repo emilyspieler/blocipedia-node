@@ -10,7 +10,6 @@ const sgMail = require('@sendgrid/mail');
 const expressValidator = require("express-validator");
 const hbs = require("hbs");
 const express = require("express");
-const stripe = require("stripe")("sk_test_u9RZqAdKph7uY9gbKbNg89V1");
 
 module.exports = {
   init(app, express){

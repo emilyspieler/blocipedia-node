@@ -11,7 +11,8 @@
 
 <h2>UPGRADE</h2>
 
-<form action="/charge" method="post">
+
+<form action="/users/<%= user.id %>/upgrade">
   <script
   src="https://checkout.stripe.com/checkout.js"
   class= "stripe-button"
