@@ -11,8 +11,9 @@
 
 <h2>UPGRADE</h2>
 
+<% if(currentUser) { %>
 
-<form action="/users/<%= user.id %>/upgrade">
+<form action="/users/<%= currentUser.id %>/upgrade" method="POST">
   <script
   src="https://checkout.stripe.com/checkout.js"
   class= "stripe-button"
@@ -24,6 +25,8 @@
 </script>
 
 <input type ="hidden" name="chargeAmount" value="1500">
+
+  <% }%>
 
  </main>
 

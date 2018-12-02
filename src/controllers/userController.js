@@ -76,6 +76,14 @@ module.exports = {
          description: req.body.description
        };
 
+       User.findById(req.params.id)
+       .then(user => {
+       user.role = 0;
+       user.save();
+
+       req.flash("notice", "You are now a standard user!");
+       res.redirect("/");
+
        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
        const msg = {
          to: 'emilyspieler1@gmail.com',
@@ -105,6 +113,8 @@ module.exports = {
            })
          }
        });
+
+})
 },
 
       charge(req, res, next){
