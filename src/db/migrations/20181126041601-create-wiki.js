@@ -15,6 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       private: {
+        allowNull: true,
         type: Sequelize.BOOLEAN
       },
       createdAt: {
@@ -26,7 +27,17 @@ module.exports = {
         type: Sequelize.DATE
       },
       userId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+         onDelete: "CASCADE",
+         allowNull: false,
+         references: {
+           model: "Users",
+           key: "id",
+           as: "userId"
+         },
+       }
+     );
       }
     });
   },

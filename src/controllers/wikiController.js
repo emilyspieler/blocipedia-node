@@ -4,7 +4,6 @@ const Authorizer = require("../policies/wiki");
 module.exports = {
   index(req, res, next){
     wikiQueries.getAllWikis((err, wikis) => {
-      console.log(err);
         if(err){
           res.redirect(500, "/");
         } else {
@@ -14,7 +13,6 @@ module.exports = {
   },
 
   new(req, res, next){
-// #2
     const authorized = new Authorizer(req.user).new();
 
     if(authorized) {
@@ -25,17 +23,28 @@ module.exports = {
     }
   },
 
+  newPrivate(req, res, next){
+    const authorized = new Authorizer(req.user).new();
+
+    if(authorized) {
+      res.render("wikis/newPrivate");
+    } else {
+      req.flash("notice", "You are not authorized to do that.");
+      res.redirect("/wikis");
+    }
+  },
+
   create(req, res, next){
 
-// #1
- const authorized = new Authorizer(req.user).create();
+    const authorized = new Authorizer(req.user).create();
 
-// #2
- if(authorized) {
-   let newWiki = {
-     title: req.body.title,
-     description: req.body.description
-   };
+    if(authorized) {
+      let newWiki = {
+        title: req.body.title,
+        description: req.body.description,
+        private: false,
+        userId: req.user.id
+      };
    wikiQueries.addWiki(newWiki, (err, wiki) => {
      if(err){
        res.redirect(500, "wikis/new");
@@ -50,6 +59,32 @@ module.exports = {
    res.redirect("/wikis");
  }
 },
+
+  // creates private wiki
+  createPrivate(req, res, next) {
+    const authorized = new Authorizer(req.user).create();
+
+    if(authorized) {
+      let newWiki = {
+        title: req.body.title,
+        description: req.body.description,
+        private: true,
+        userId: req.body.userId
+      };
+      wikiQueries.addPrivateWiki(newWiki, (err, wiki) => {
+        if(err){
+          res.redirect(500, "wikis/newPrivate");
+        } else {
+          res.redirect(303, `/wikis/${wiki.id}`);
+        }
+      });
+    } else {
+
+      req.flash("notice", "You are not authorized to do that.");
+      res.redirect("/wikis");
+    }
+},
+
        show(req, res, next){
 
           wikiQueries.getWiki(req.params.id, (err, wiki) => {
@@ -64,7 +99,6 @@ module.exports = {
 
         destroy(req, res, next){
 
-     // #1
          wikiQueries.deleteWiki(req, (err, wiki) => {
            if(err){
              res.redirect(err, `/wikis/${req.params.id}`)

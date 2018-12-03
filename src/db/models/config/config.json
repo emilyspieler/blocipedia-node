@@ -1,9 +1,5 @@
 {
   "development": {
-<<<<<<< HEAD
-    "username": "root",
-=======
->>>>>>> slack-help
     "password": null,
     "username": "postgres",
     "database": "bloccipedia-dev",

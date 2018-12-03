@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.hasMany(models.Wiki, {
       foreignKey: "userId",
-      as: "wiki"
+      as: "wikis"
     });
   };
   User.prototype.isAdmin = function() {
