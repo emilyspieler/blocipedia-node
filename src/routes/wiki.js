@@ -20,4 +20,9 @@ router.post("/wikis/:id/destroy", wikiController.destroy);
 router.get("/wikis/:id/edit", wikiController.edit);
 router.post("/wikis/:id/update", wikiController.update);
 
+router.get("/wikis/:id/makePublic", wikiController.makePublic);
+router.post("/wikis/:id/makePublic", wikiController.makePublic);
+router.get("/wikis/:id/makePrivate", wikiController.makePrivate);
+router.post("/wikis/:id/makePrivate", wikiController.makePrivate);
+
 module.exports = router;

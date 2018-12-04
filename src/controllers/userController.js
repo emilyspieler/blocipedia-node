@@ -3,6 +3,7 @@ const userQueries = require("../db/queries.users.js");
 const sgMail = require('@sendgrid/mail');
 const User = require('../db/models').User;
 const stripe = require("stripe")(process.env.stripeSecret);
+const Wiki = require("../db/models").Wiki;
 
 module.exports = {
 
@@ -62,8 +63,8 @@ module.exports = {
    .catch(err => {
       req.flash("error", err);
       res.redirect("/");
-})
-},
+    })
+  },
 
    downgrade(req, res, next){
      res.render("users/downgrade");
@@ -75,6 +76,12 @@ module.exports = {
          email: req.body.email,
          description: req.body.description
        };
+
+//do I need to define a user ID as well?
+       Wiki.findById(req.params.id)
+       .then(wiki => {
+         wiki.privacy = false;
+         wiki.save();
 
        User.findById(req.params.id)
        .then(user => {
@@ -113,16 +120,16 @@ module.exports = {
            })
          }
        });
-
-})
-},
+     })
+     })
+   },
 
       charge(req, res, next){
           User.findById(req.params.id)
           .then(user => {
             console.log(user);
             var stripeToken = req.body.stripeToken;
-            // Charge the user's card:
+      
             stripe.charges.create({
               amount: 1500,
               currency: "usd",
@@ -141,6 +148,7 @@ module.exports = {
           req.flash("notice", "Error upgrading.  Please try again.");
           res.redirect("/");
         });
-      },
+      }
+
 
     }

@@ -35,7 +35,6 @@ module.exports = {
   },
 
   create(req, res, next){
-
     const authorized = new Authorizer(req.user).create();
 
     if(authorized) {
@@ -60,7 +59,7 @@ module.exports = {
  }
 },
 
-  // creates private wiki
+  // this will create a wiki that is private (private = true)
   createPrivate(req, res, next) {
     const authorized = new Authorizer(req.user).create();
 
@@ -69,7 +68,7 @@ module.exports = {
         title: req.body.title,
         description: req.body.description,
         private: true,
-        userId: req.body.userId
+        userId: req.user.id
       };
       wikiQueries.addPrivateWiki(newWiki, (err, wiki) => {
         if(err){
@@ -111,7 +110,6 @@ module.exports = {
 edit(req, res, next){
 
    wikiQueries.getWiki(req.params.id, (err, wiki) => {
-     console.log(err);
      if(err || wiki == null){
        res.redirect(404, "/");
      } else {
@@ -128,9 +126,56 @@ edit(req, res, next){
    });
  },
 
+ makePrivate(req, res, next){
+   //when they click on this private should change to true
+   wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+
+     if(err || wiki == null){
+       console.log("you have an error");
+       res.redirect(401, `/wikis/${req.params.id}`);
+        } else {
+
+        const authorized = new Authorizer(req.user, wiki).edit();
+
+          if(authorized){
+
+          wiki.private = true;
+          wiki.save();
+
+          req.flash("Your wiki is now private");
+          res.redirect(`/wikis/${req.params.id}`);
+        }
+        }
+      });
+ },
+
+ makePublic(req, res, next){
+   //when they click on this private should change to false
+   wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+
+     if(err || wiki == null){
+       console.log("there is an error");
+       res.redirect(401, `/wikis/${req.params.id}`);
+        } else {
+
+        const authorized = new Authorizer(req.user, wiki).edit();
+
+          if(authorized){
+
+          wiki.private = false;
+          wiki.save();
+
+          req.flash("Your wiki is now public");
+          res.redirect(`/wikis/${req.params.id}`);
+        }
+        }
+      });
+ },
+
  update(req, res, next){
 
    wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+
      if(err || wiki == null){
        res.redirect(401, `/wikis/${req.params.id}/edit`);
         } else {
