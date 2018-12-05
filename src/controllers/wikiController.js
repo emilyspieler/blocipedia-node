@@ -1,5 +1,6 @@
 const wikiQueries = require("../db/queries.wikis.js");
 const Authorizer = require("../policies/wiki");
+const markdown = require( "markdown" ).markdown;
 
 module.exports = {
   index(req, res, next){
@@ -44,13 +45,25 @@ module.exports = {
         private: false,
         userId: req.user.id
       };
-   wikiQueries.addWiki(newWiki, (err, wiki) => {
-     if(err){
-       res.redirect(500, "wikis/new");
-     } else {
-       res.redirect(303, `/wikis/${wiki.id}`);
-     }
-   });
+
+
+        console.log( markdown.toHTML( "Hello *World*!" ) );
+
+
+
+        wikiQueries.addWiki(newWiki, (err, wiki) => {
+        if(err){
+          res.redirect(500, "wikis/new");
+          console.log(err);
+        } else {
+
+          //review this line
+          var description = markdown.toHTML(wiki.description);
+          console.log("description", description);
+          res.render("wikis/show",
+            {wiki: wiki, htmlDescription: description});
+        }
+      });
  } else {
 
 // #3
@@ -91,7 +104,12 @@ module.exports = {
             if(err || wiki == null){
               res.redirect(404, "/");
             } else {
-              res.render("wikis/show", {wiki});
+
+              var description = markdown.toHTML(wiki.description);
+              console.log("description", description);
+              res.render("wikis/show",
+                {wiki: wiki, htmlDescription: description});
+                
             }
           });
         },
@@ -182,5 +200,6 @@ edit(req, res, next){
           res.redirect(`/wikis/${req.params.id}`);
         }
       });
-    }
+    },
+
 }

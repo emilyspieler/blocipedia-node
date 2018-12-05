@@ -9,7 +9,9 @@
     <main class="container">
       <h1><%= wiki.title %></h1>
 
+
       <% if(currentUser) { %>
+
       <% if(currentUser.isAdmin() || currentUser.isPremium() || currentUser.isStandard()) { %>
       <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
 
@@ -37,7 +39,7 @@
       <% } %>
       <% } %>
       <% } %>
-      <p><%= wiki.description %></p>
+      <p><%- htmlDescription %></p>
     </main>
 
   </body>
