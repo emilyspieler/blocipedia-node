@@ -109,7 +109,7 @@ module.exports = {
               console.log("description", description);
               res.render("wikis/show",
                 {wiki: wiki, htmlDescription: description});
-                
+
             }
           });
         },
@@ -202,4 +202,28 @@ edit(req, res, next){
       });
     },
 
+//needs to have updateCollaberator function added
+    updateCollaborator(req, res, next) {
+      wikiQueries.updateWikiCollaborator(req, req.body, (err, wiki) => {
+
+        if(err || wiki == null){
+          console.log(err);
+          res.redirect(401, `/wikis/${req.params.id}/edit`);
+           } else {
+             res.redirect(`/wikis/${req.params.id}/edit/updateCollaborator`);
+           }
+         });
+    },
+
+//needs to have updateCollaberatorRemove function added
+    updateCollaboratorRemove(req, res, next) {
+        wikiQueries.updateWikiCollaboratorRemove(req, req.body, (err, wiki) => {
+      if(err || wiki == null){
+        console.log(err);
+        res.redirect(401, `/wikis/${req.params.id}/edit`);
+         } else {
+           res.redirect(`/wikis/${req.params.id}/edit/updateCollaboratorRemove`);
+         }
+       });
+    }
 }

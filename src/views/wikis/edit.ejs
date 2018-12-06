@@ -10,16 +10,30 @@
 
       <h1>Edit Wiki</h1>
 
-<!-- #1 -->
+<!---  <% if(wiki.private) { %>
+
+<h1>Add Collaberator</h1>
+<a href="/wikis/<%= wiki.id %>/edit/updateCollaborator" class="btn btn-success">Add Collaborator</a>
+
+
+<h1>Remove Collaberator</h1>
+<a href="/wikis/<%= wiki.id %>/edit/updateCollaboratorRemove" class="btn btn-success">Remove Collaborator</a>
+
+<% } %>
+ --->
+
+
+
+<!--- Regular edit form --->
       <form action="/wikis/<%= wiki.id %>/update" method="post">
         <div class="form-group">
           <label for="title">Wiki Title</label>
-<!-- #2 -->
+
           <input value="<%= wiki.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-<!-- #3 -->
+
           <textarea rows="4" class="form-control" name="description" placeholder="Enter Description"><%= wiki.description %></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>

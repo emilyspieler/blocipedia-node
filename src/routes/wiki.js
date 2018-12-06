@@ -25,4 +25,9 @@ router.post("/wikis/:id/makePublic", wikiController.makePublic);
 router.get("/wikis/:id/makePrivate", wikiController.makePrivate);
 router.post("/wikis/:id/makePrivate", wikiController.makePrivate);
 
+/* router.get("/wikis/:id/edit/updateCollaborator", wikiController.updateCollaborator);
+router.post("/wikis/:id/edit/updateCollaborator", wikiController.updateCollaborator);
+router.get("/wikis/:id/edit/updateCollaboratorRemove", wikiController.updateCollaboratorRemove);
+router.post("/wikis/:id/edit/updateCollaboratorRemove", wikiController.updateCollaboratorRemove); */
+
 module.exports = router;
