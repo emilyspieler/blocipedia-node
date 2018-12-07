@@ -14,14 +14,7 @@ module.exports = {
   },
 
   new(req, res, next){
-    const authorized = new Authorizer(req.user).new();
-
-    if(authorized) {
-      res.render("wikis/new");
-    } else {
-      req.flash("notice", "You are not authorized to do that.");
-      res.redirect("/wikis");
-    }
+    res.render("wikis/new", {id: req.params.id});
   },
 
   newPrivate(req, res, next){
@@ -46,18 +39,11 @@ module.exports = {
         userId: req.user.id
       };
 
-
-        console.log( markdown.toHTML( "Hello *World*!" ) );
-
-
-
         wikiQueries.addWiki(newWiki, (err, wiki) => {
         if(err){
           res.redirect(500, "wikis/new");
-          console.log(err);
         } else {
 
-          //review this line
           var description = markdown.toHTML(wiki.description);
           console.log("description", description);
           res.render("wikis/show",
@@ -97,6 +83,7 @@ module.exports = {
     }
 },
 
+
        show(req, res, next){
 
           wikiQueries.getWiki(req.params.id, (err, wiki) => {
@@ -106,7 +93,6 @@ module.exports = {
             } else {
 
               var description = markdown.toHTML(wiki.description);
-              console.log("description", description);
               res.render("wikis/show",
                 {wiki: wiki, htmlDescription: description});
 
@@ -145,11 +131,10 @@ edit(req, res, next){
  },
 
  makePrivate(req, res, next){
-   //when they click on this private should change to true
+
    wikiQueries.updateWiki(req, req.body, (err, wiki) => {
 
      if(err || wiki == null){
-       console.log("you have an error");
        res.redirect(401, `/wikis/${req.params.id}`);
         } else {
 
@@ -168,11 +153,10 @@ edit(req, res, next){
  },
 
  makePublic(req, res, next){
-   //when they click on this private should change to false
+
    wikiQueries.updateWiki(req, req.body, (err, wiki) => {
 
      if(err || wiki == null){
-       console.log("there is an error");
        res.redirect(401, `/wikis/${req.params.id}`);
         } else {
 
@@ -186,8 +170,8 @@ edit(req, res, next){
           req.flash("Your wiki is now public");
           res.redirect(`/wikis/${req.params.id}`);
         }
-        }
-      });
+       }
+    });
  },
 
  update(req, res, next){
@@ -202,28 +186,4 @@ edit(req, res, next){
       });
     },
 
-//needs to have updateCollaberator function added
-    updateCollaborator(req, res, next) {
-      wikiQueries.updateWikiCollaborator(req, req.body, (err, wiki) => {
-
-        if(err || wiki == null){
-          console.log(err);
-          res.redirect(401, `/wikis/${req.params.id}/edit`);
-           } else {
-             res.redirect(`/wikis/${req.params.id}/edit/updateCollaborator`);
-           }
-         });
-    },
-
-//needs to have updateCollaberatorRemove function added
-    updateCollaboratorRemove(req, res, next) {
-        wikiQueries.updateWikiCollaboratorRemove(req, req.body, (err, wiki) => {
-      if(err || wiki == null){
-        console.log(err);
-        res.redirect(401, `/wikis/${req.params.id}/edit`);
-         } else {
-           res.redirect(`/wikis/${req.params.id}/edit/updateCollaboratorRemove`);
-         }
-       });
-    }
 }

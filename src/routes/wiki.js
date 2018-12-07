@@ -3,7 +3,8 @@ const router = express.Router();
 const helper = require("../auth/helpers");
 const validation = require("./validation");
 
-const wikiController = require("../controllers/wikiController")
+const wikiController = require("../controllers/wikiController");
+const userController = require("../controllers/userController");
 
 router.get("/wikis", wikiController.index);
 router.get("/wikis/new", wikiController.new);
@@ -24,10 +25,5 @@ router.get("/wikis/:id/makePublic", wikiController.makePublic);
 router.post("/wikis/:id/makePublic", wikiController.makePublic);
 router.get("/wikis/:id/makePrivate", wikiController.makePrivate);
 router.post("/wikis/:id/makePrivate", wikiController.makePrivate);
-
-/* router.get("/wikis/:id/edit/updateCollaborator", wikiController.updateCollaborator);
-router.post("/wikis/:id/edit/updateCollaborator", wikiController.updateCollaborator);
-router.get("/wikis/:id/edit/updateCollaboratorRemove", wikiController.updateCollaboratorRemove);
-router.post("/wikis/:id/edit/updateCollaboratorRemove", wikiController.updateCollaboratorRemove); */
 
 module.exports = router;
