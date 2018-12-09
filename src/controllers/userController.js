@@ -4,14 +4,14 @@ const sgMail = require('@sendgrid/mail');
 const User = require('../db/models').User;
 const stripe = require("stripe")(process.env.stripeSecret);
 const Wiki = require("../db/models").Wiki;
+const Collaboration = require("../db/models").Collaboration;
 
 module.exports = {
-
   signUp(req, res, next){
     res.render("users/signup");
   },
 
-   create(req, res, next){
+  create(req, res, next){
      let newUser = {
        email: req.body.email, //form not sending body
        password: req.body.password,
@@ -32,6 +32,7 @@ module.exports = {
        }
      });
    },
+
 
   signInForm(req, res, next){
      res.render("users/sign_in");
@@ -77,11 +78,13 @@ module.exports = {
          description: req.body.description
        };
 
-//do I need to define a user ID as well?
-       Wiki.findById(req.params.id)
-       .then(wiki => {
-         wiki.privacy = false;
-         wiki.save();
+       Wiki.update({
+         private: false
+          }, {
+        where: {
+        userId: user.id
+        }
+        });
 
        User.findById(req.params.id)
        .then(user => {
@@ -99,7 +102,7 @@ module.exports = {
          text: 'Please refund their credit card',
          html: '<strong>and easy to do anywhere, even with Node.js</strong>',
        };
-          console.log(process.env.SENDGRID_API_KEY)
+
           sgMail.send(msg).then( () => {
             console.log("Successfully Sent Mail!");
           })
@@ -110,7 +113,6 @@ module.exports = {
        userQueries.createDowngrade(newDowngrade, (err, user) => {
          if(err){
            req.flash("error", err);
-           console.log(err);
            res.redirect("/");
          } else {
 
@@ -129,7 +131,7 @@ module.exports = {
           .then(user => {
             console.log(user);
             var stripeToken = req.body.stripeToken;
-      
+
             stripe.charges.create({
               amount: 1500,
               currency: "usd",
