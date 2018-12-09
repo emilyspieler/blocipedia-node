@@ -78,18 +78,24 @@ module.exports = {
          description: req.body.description
        };
 
-       Wiki.findById(req.params.id)
-       .then(wiki => {
-         wiki.privacy = false;
-         wiki.save();
-
        User.findById(req.params.id)
        .then(user => {
        user.role = 0;
        user.save();
 
+       Wiki.update({
+   					private: false
+				}, {
+   					where: {
+      					userId: user.id
+   					}
+				});
+
+
        req.flash("notice", "You are now a standard user!");
        res.redirect("/");
+
+ })
 
        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
        const msg = {
@@ -119,8 +125,7 @@ module.exports = {
            })
          }
        });
-     })
-     })
+
    },
 
       charge(req, res, next){

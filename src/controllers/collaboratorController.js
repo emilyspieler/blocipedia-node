@@ -27,7 +27,8 @@ module.exports = {
       if(authorized) {
        let newCollaboration= {
          email: req.body.email,
-         userId: req.user.id
+         userId: req.user.id,
+         wikiId: req.params.wikiId
        };
        collaborationQueries.addCollaboration(newCollaboration, (err, collaboration) => {
          if(err){
@@ -49,7 +50,7 @@ module.exports = {
          if(err || collaboration == null){
       res.redirect(404, "/");
     } else {
-      res.render("collaborations/show", {collaboration});
+      res.render("collaborations/show");
     }
   });
 },
