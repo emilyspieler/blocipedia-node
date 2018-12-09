@@ -72,6 +72,7 @@ module.exports = {
    },
 
    downgradeForm(req, res, next){
+    console.log(`downgradeFrom params.id is ${req.params.id}`);
       let newDowngrade = {
          name: req.body.name, //form not sending body
          email: req.body.email,
@@ -79,10 +80,9 @@ module.exports = {
        };
 
        Wiki.update({
-         private: false
-          }, {
+          private: false }, {
         where: {
-        userId: user.id
+        userId: req.params.id
         }
         });
 
@@ -115,7 +115,6 @@ module.exports = {
            req.flash("error", err);
            res.redirect("/");
          } else {
-
            passport.authenticate("local")(req, res, () => {
              req.flash("notice", "You've successfully Downgraded!");
              res.redirect("/");
@@ -128,7 +127,6 @@ module.exports = {
       charge(req, res, next){
           User.findById(req.params.id)
           .then(user => {
-            console.log(user);
             var stripeToken = req.body.stripeToken;
 
             stripe.charges.create({
