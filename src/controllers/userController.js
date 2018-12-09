@@ -123,7 +123,6 @@ module.exports = {
          }
        });
      })
-     })
    },
 
       charge(req, res, next){
