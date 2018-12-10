@@ -163,7 +163,7 @@ edit(req, res, next){
       });
     },
 
-/*
+
 
 //needs to have updateCollaberator function added
     updateCollaborator(req, res, next) {
@@ -188,5 +188,5 @@ edit(req, res, next){
            res.redirect(`/wikis/${req.params.id}/edit/updateCollaboratorRemove`);
          }
        });
-    } */
+    }
 }
