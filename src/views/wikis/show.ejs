@@ -23,7 +23,7 @@
 
     <% if(wiki.private) { %>
       <a href="/wikis/<%= wiki.id %>/makePublic" class="btn btn-success">Make Wiki Public</a>
-
+      <a href="/wikis/<%= wiki.id %>/collaborations/new" class="btn btn-success">New Collaberator</a>
 
     <% } else { %>
       <a href="/wikis/<%= wiki.id %>/makePrivate" class="btn btn-success">Make Wiki Private</a>

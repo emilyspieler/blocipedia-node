@@ -91,8 +91,19 @@ module.exports = {
        user.role = 0;
        user.save();
 
+       Wiki.update({
+   					private: false
+				}, {
+   					where: {
+      					userId: user.id
+   					}
+				});
+
+
        req.flash("notice", "You are now a standard user!");
        res.redirect("/");
+
+ })
 
        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
        const msg = {
@@ -121,7 +132,6 @@ module.exports = {
            })
          }
        });
-     })
    },
 
       charge(req, res, next){

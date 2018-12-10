@@ -1,16 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const collaboration = sequelize.define('collaboration', {
+  const Collaboration = sequelize.define('Collaboration', {
     userId: DataTypes.STRING,
-    createAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    email: DataTypes.STRING
   }, {});
-  collaboration.associate = function(models) {
+  Collaboration.associate = function(models) {
     // associations can be defined here
-    collaboration.belongsTo(models.User, {
+    Collaboration.belongsTo(models.User, {
       foreignKey: "userId",
       onDelete: "CASCADE",
     });
   };
-  return collaboration;
+  return Collaboration;
 };

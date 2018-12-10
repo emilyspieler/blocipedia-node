@@ -14,14 +14,7 @@ module.exports = {
   },
 
   new(req, res, next){
-    const authorized = new Authorizer(req.user).new();
-
-    if(authorized) {
-      res.render("wikis/new");
-    } else {
-      req.flash("notice", "You are not authorized to do that.");
-      res.redirect("/wikis");
-    }
+    res.render("wikis/new", {id: req.params.id});
   },
 
   create(req, res, next){
@@ -106,11 +99,10 @@ edit(req, res, next){
  },
 
  makePrivate(req, res, next){
-   //when they click on this private should change to true
+
    wikiQueries.updateWiki(req, req.body, (err, wiki) => {
 
      if(err || wiki == null){
-       console.log("you have an error");
        res.redirect(401, `/wikis/${req.params.id}`);
         } else {
 
@@ -129,11 +121,10 @@ edit(req, res, next){
  },
 
  makePublic(req, res, next){
-   //when they click on this private should change to false
+
    wikiQueries.updateWiki(req, req.body, (err, wiki) => {
 
      if(err || wiki == null){
-       console.log("there is an error");
        res.redirect(401, `/wikis/${req.params.id}`);
         } else {
 
@@ -147,8 +138,8 @@ edit(req, res, next){
           req.flash("Your wiki is now public");
           res.redirect(`/wikis/${req.params.id}`);
         }
-        }
-      });
+       }
+    });
  },
 
  update(req, res, next){

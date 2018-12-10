@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "wikis"
     });
 
-    User.hasMany(models.collaboration, {
+    User.hasMany(models.Collaboration, {
       foreignKey: "userId",
       as: "collaborations"
     });
