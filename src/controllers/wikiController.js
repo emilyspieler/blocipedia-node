@@ -24,91 +24,52 @@ module.exports = {
     }
   },
 
-  newPrivate(req, res, next){
-    const authorized = new Authorizer(req.user).new();
-
-    if(authorized) {
-      res.render("wikis/newPrivate");
-    } else {
-      req.flash("notice", "You are not authorized to do that.");
-      res.redirect("/wikis");
-    }
-  },
-
   create(req, res, next){
     const authorized = new Authorizer(req.user).create();
 
     if(authorized) {
-      let newWiki = {
-        title: req.body.title,
-        description: req.body.description,
-        private: false,
-        userId: req.user.id
-      };
+    const options = {
+      title: req.body.title,
+      description: req.body.description,
+      userId: req.params.id
+    }
+    if (req.body.private) {
+      options.private = true;
+    }
 
 
-        console.log( markdown.toHTML( "Hello *World*!" ) );
+      wikiQueries.addWiki(options, (err, wiki) => {
 
-
-
-        wikiQueries.addWiki(newWiki, (err, wiki) => {
         if(err){
           res.redirect(500, "wikis/new");
-          console.log(err);
+
         } else {
 
-          //review this line
-          var description = markdown.toHTML(wiki.description);
-          console.log("description", description);
+
+        console.log(req.body);
+        var description = markdown.toHTML(wiki.description);
           res.render("wikis/show",
             {wiki: wiki, htmlDescription: description});
-        }
-      });
- } else {
+          }
+        });
+        } else {
 
-// #3
-   req.flash("notice", "You are not authorized to do that.");
-   res.redirect("/wikis");
+        req.flash("notice", "You are not authorized to do that.");
+        res.redirect("/wikis");
  }
 },
 
-  // this will create a wiki that is private (private = true)
-  createPrivate(req, res, next) {
-    const authorized = new Authorizer(req.user).create();
+ show(req, res, next){
 
-    if(authorized) {
-      let newWiki = {
-        title: req.body.title,
-        description: req.body.description,
-        private: true,
-        userId: req.user.id
-      };
-      wikiQueries.addPrivateWiki(newWiki, (err, wiki) => {
-        if(err){
-          res.redirect(500, "wikis/newPrivate");
-        } else {
-          res.redirect(303, `/wikis/${wiki.id}`);
-        }
-      });
-    } else {
+    wikiQueries.getWiki(req.params.id, (err, wiki) => {
 
-      req.flash("notice", "You are not authorized to do that.");
-      res.redirect("/wikis");
-    }
-},
+      if(err || wiki == null){
+        res.redirect(404, "/");
+      } else {
 
-       show(req, res, next){
-
-          wikiQueries.getWiki(req.params.id, (err, wiki) => {
-
-            if(err || wiki == null){
-              res.redirect(404, "/");
-            } else {
-
-              var description = markdown.toHTML(wiki.description);
-              console.log("description", description);
-              res.render("wikis/show",
-                {wiki: wiki, htmlDescription: description});
+        var description = markdown.toHTML(wiki.description);
+         res.render("wikis/show",
+          {wiki: wiki, htmlDescription: description});
 
             }
           });
@@ -202,6 +163,8 @@ edit(req, res, next){
       });
     },
 
+/*
+
 //needs to have updateCollaberator function added
     updateCollaborator(req, res, next) {
       wikiQueries.updateWikiCollaborator(req, req.body, (err, wiki) => {
@@ -225,5 +188,5 @@ edit(req, res, next){
            res.redirect(`/wikis/${req.params.id}/edit/updateCollaboratorRemove`);
          }
        });
-    }
+    } */
 }

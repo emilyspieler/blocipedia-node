@@ -6,10 +6,6 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
     return this.new();
   }
 
-  createPrivate() {
-    return this.newPrivate();
-  }
-
   update() {
     return this.edit();
   }

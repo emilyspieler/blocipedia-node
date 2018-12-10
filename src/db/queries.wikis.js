@@ -17,12 +17,12 @@ module.exports = {
     })
   },
 
-  addWiki(newWiki, callback){
+  addWiki(options, callback){
       return Wiki.create({
-        title: newWiki.title,
-        description: newWiki.description,
-        private: newWiki.private,
-        userId: newWiki.userId
+        title: options.title,
+        description: options.description,
+        private: options.private,
+        userId: options.userId
       })
       .then((wiki) => {
         callback(null, wiki);
@@ -31,21 +31,6 @@ module.exports = {
         callback(err);
       })
     },
-
-    addPrivateWiki(newWiki, callback){
-        return Wiki.create({
-          title: newWiki.title,
-          description: newWiki.description,
-          private: newWiki.private,
-          userId: newWiki.userId
-        })
-        .then((wiki) => {
-          callback(null, wiki);
-        })
-        .catch((err) => {
-          callback(err);
-        })
-      },
 
     getWiki(id, callback){
        return Wiki.findById(id)
