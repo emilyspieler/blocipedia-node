@@ -35,8 +35,9 @@ module.exports = {
            console.log(err);
            res.redirect(500, "/collaborations/new");
          } else {
-           res.redirect(303, `/wikis/${newCollaboration.wikiId}/collaborations/${collaboration.id}`);
-         }
+           res.render("collaborations/show",
+             {collaboration});
+           }
        });
          } else {
 
@@ -55,42 +56,7 @@ module.exports = {
   });
 },
 
+updateCollaberator(req, res, next){
+}
 
-// opens file
-   updateCollaborator(req, res, next) {
-     wikiQueries.getWiki(req.params.id, (err, wiki) => {
-       if(err || wiki == null){
-         res.redirect(404, "/");
-       } else {
-
-         const authorized = new Authorizer(req.user, wiki).edit();
-
-         if(authorized){
-           res.render("wikis/updateCollaborator", {wiki});
-         } else {
-           req.flash("You are not authorized to do that.")
-           res.redirect(`/wikis/${req.params.id}`)
-         }
-       }
-     });
-    },
-
-// opens file
-    updateCollaboratorRemove(req, res, next) {
-      wikiQueries.getWiki(req.params.id, (err, wiki) => {
-        if(err || wiki == null){
-          res.redirect(404, "/");
-        } else {
-
-          const authorized = new Authorizer(req.user, wiki).edit();
-
-          if(authorized){
-            res.render("wikis/updateCollaboratorRemove", {wiki});
-          } else {
-            req.flash("You are not authorized to do that.")
-            res.redirect(`/wikis/${req.params.id}`)
-          }
-        }
-      });
-      }
 }

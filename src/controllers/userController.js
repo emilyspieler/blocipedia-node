@@ -72,7 +72,6 @@ module.exports = {
    },
 
    downgradeForm(req, res, next){
-    console.log(`downgradeFrom params.id is ${req.params.id}`);
       let newDowngrade = {
          name: req.body.name, //form not sending body
          email: req.body.email,
