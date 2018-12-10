@@ -37,9 +37,6 @@ module.exports = {
           res.redirect(500, "wikis/new");
 
         } else {
-
-
-        console.log(req.body);
         var description = markdown.toHTML(wiki.description);
           res.render("wikis/show",
             {wiki: wiki, htmlDescription: description});
