@@ -1,7 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Collaboration = sequelize.define('Collaboration', {
-    userId: DataTypes.STRING,
+    userId: DataTypes.INTEGER,
+    wikiId: DataTypes.INTEGER,
     email: DataTypes.STRING
   }, {});
   Collaboration.associate = function(models) {
@@ -10,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE",
     });
+
+    Collaboration.belongsTo(models.Wiki, {
+      foreignKey: "wikiId",
+      onDelete: "CASCADE",
+    });
+
   };
   return Collaboration;
 };

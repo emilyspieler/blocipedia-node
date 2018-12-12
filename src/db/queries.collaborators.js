@@ -5,6 +5,18 @@ const Wiki = require("./models").Wiki;
 
 module.exports = {
 
+  getAllCollaborators(callback){
+    return Collaboration.all()
+
+    .then((collaborators) => {
+      callback(null, collaborators);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
+
+
 addCollaboration(newCollaboration, callback){
       return Collaboration.create(newCollaboration)
       .then((collaboration) => {
@@ -16,11 +28,7 @@ addCollaboration(newCollaboration, callback){
     },
 
     getCollaboration(id, callback){
-      return Collaboration.findById(id, {
-        include: [
-            {model: User }
-    ]
-  })
+      return Collaboration.findById(id)
   .then((collaboration) => {
     callback(null, collaboration);
   })
@@ -28,5 +36,17 @@ addCollaboration(newCollaboration, callback){
     callback(err);
   })
 },
+
+deleteCollaboration(id, callback){
+     return Collaboration.destroy({
+       where: { id }
+     })
+     .then((collaboration) => {
+       callback(null, collaboration);
+     })
+     .catch((err) => {
+       callback(err);
+     })
+   },
 
 }

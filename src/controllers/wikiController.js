@@ -24,7 +24,7 @@ module.exports = {
     const options = {
       title: req.body.title,
       description: req.body.description,
-      userId: req.params.id
+      userId: req.user.id
     }
     if (req.body.private) {
       options.private = true;

@@ -57,11 +57,11 @@ module.exports = {
    },
 
    upgrade(req, res, next){
-   User.findById(req.params.id)
-   .then(user => {
-      res.render('users/upgrade', {user});
-   })
-   .catch(err => {
+     User.findById(req.params.id)
+     .then(user => {
+       res.render('users/upgrade', {user});
+    })
+    .catch(err => {
       req.flash("error", err);
       res.redirect("/");
     })
@@ -79,7 +79,7 @@ module.exports = {
        };
 
        Wiki.update({
-          private: false }, {
+        private: false }, {
         where: {
         userId: req.params.id
         }
@@ -89,15 +89,6 @@ module.exports = {
        .then(user => {
        user.role = 0;
        user.save();
-
-       Wiki.update({
-   					private: false
-				}, {
-   					where: {
-      					userId: user.id
-   					}
-				});
-
 
        req.flash("notice", "You are now a standard user!");
        res.redirect("/");

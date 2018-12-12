@@ -25,16 +25,12 @@ module.exports = class ApplicationPolicy {
          return this.user != null;
       }
 
-      newCollaboration(){
-        return this.new()
-      }
-
       show() {
          return true;
       }
 
       edit() {
-         return this.user != null;
+        return this.user != null;
       }
 
       update() {

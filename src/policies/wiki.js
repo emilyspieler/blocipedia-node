@@ -13,4 +13,13 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   destroy() {
     return this.update();
   }
+
+  show() {
+  if (user.currentUser || user.collaborator) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 }

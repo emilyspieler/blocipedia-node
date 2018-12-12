@@ -9,6 +9,7 @@ const faker = require("faker");
    wikis.push({
      title: faker.hacker.noun(),
      description: faker.hacker.phrase(),
+     userId: i,
      createdAt: new Date(),
      updatedAt: new Date()
    });

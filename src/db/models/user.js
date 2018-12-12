@@ -41,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.isStandard = function() {
       return this.role === 0;
       };
+  User.prototype.isCollaborator = function(wiki) {
+      console.log(wiki)
+      };
 
 
   return User;

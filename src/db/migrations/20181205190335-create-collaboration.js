@@ -11,6 +11,9 @@ module.exports = {
       userId: {
         type: Sequelize.STRING
       },
+      wikiId: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING
       },

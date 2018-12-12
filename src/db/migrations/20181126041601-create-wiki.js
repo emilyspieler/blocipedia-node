@@ -25,8 +25,9 @@ module.exports = {
         type: Sequelize.DATE
       },
       userId: {
-        type: Sequelize.INTEGER
-      }
+       type: Sequelize.INTEGER,
+       allowNull: false
+     }
     });
   },
   down: (queryInterface, Sequelize) => {

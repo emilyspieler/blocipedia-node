@@ -10,7 +10,10 @@
 
       <p><%= collaboration.email %></h1> now has permission to edit your private wiki.
 
-<!--- redirect to wiki they can edit --->
+      <form style="display:initial" action="/wikis/<%= collaboration.wikiId %>/collaborations/<%= collaboration.id %>/destroy" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+
 
     </main>
 

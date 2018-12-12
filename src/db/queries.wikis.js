@@ -7,9 +7,8 @@ module.exports = {
 //#1
   getAllWikis(callback){
     return Wiki.all()
-
-//#2
     .then((wikis) => {
+
       callback(null, wikis);
     })
     .catch((err) => {
@@ -41,6 +40,16 @@ module.exports = {
          callback(err);
        })
      },
+
+     getCollaborations(id, callback){
+        return Collaboration.findById(id)
+        .then((collaboration) => {
+          callback(null, collaboration);
+        })
+        .catch((err) => {
+          callback(err);
+        })
+      },
 
      deleteWiki(req, callback){
 
