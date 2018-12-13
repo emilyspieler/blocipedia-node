@@ -5,6 +5,7 @@ const User = require('../db/models').User;
 const stripe = require("stripe")(process.env.stripeSecret);
 const Wiki = require("../db/models").Wiki;
 const Collaborator = require("../db/models").Collaborator;
+const Authorizer = require("../policies/wiki");
 
 module.exports = {
   signUp(req, res, next){

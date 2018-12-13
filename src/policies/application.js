@@ -22,6 +22,15 @@ module.exports = class ApplicationPolicy {
           return this.user && this.user.role === 0;
         }
 
+        _isCollaborator() {
+          console.log("this error is" + this.record.collaborators)
+          return (
+            this.record.collaborators[0] && this.record.collaborators.find(collaborator => {
+          return (this.user.id == collaborator.userId)
+        })
+      );
+    }
+
       new() {
          return this.user != null;
       }
@@ -31,7 +40,7 @@ module.exports = class ApplicationPolicy {
       }
 
       edit() {
-        return this.user != null;
+        return this.record && (this._isOwner() || this._isAdmin() || this._isCollaborator());
       }
 
       update() {

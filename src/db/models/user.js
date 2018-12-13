@@ -42,9 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       return this.role === 0;
       };
 
-  //User.prototype.isCollaborator = function(wiki) {
-    //  console.log(wiki.collaborators)
-  //    };
+User.prototype.isCollaborator = function(wiki) {
+    console.log("hello" + wiki.collaborators)
+    };
 //wiki.collaborators is undefined
 
   return User;

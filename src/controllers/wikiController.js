@@ -1,17 +1,42 @@
 const wikiQueries = require("../db/queries.wikis.js");
 const Authorizer = require("../policies/wiki");
 const markdown = require( "markdown" ).markdown;
+const User = require("../db/models").User;
 
 module.exports = {
   index(req, res, next){
-    wikiQueries.getAllWikis((err, wikis) => {
+
+    let wikiArray = [];
+      wikiQueries.getAllWikis((err, wikis) => {
         if(err){
+          //if there's errors
           res.redirect(500, "/");
         } else {
-          res.render("wikis/index", {wikis});
+          //if there isn't errors
+          wikis.forEach(wiki => {
+            //loop through wikis
+            if (req.body.private) {
+              //if the wiki is private
+              if(wiki.collaborators) {
+                 //... and has a collab
+                wiki.collaborators.forEach(collaborator => {
+                     //loop through the collab and check the associations
+                  if((collaborator.userId == req.user.id && wiki.id == collaborator.wikiId) || req.user.role == 2 || req.user.id == wiki.userId){
+                      //push new array
+                    wikiArray.push(wiki)
+                  }
+                })
+              }
+            }
+            else {
+              //OTHERWISE, if all of that other stuff doesn't apply, ie) wikis are public, then just push the wikis
+              wikiArray.push(wiki)
+            }
+          })
+          res.render("wikis/index", {wikiArray});
         }
       })
-  },
+    },
 
   new(req, res, next){
     res.render("wikis/new", {id: req.params.id});
@@ -86,8 +111,9 @@ edit(req, res, next){
        const authorized = new Authorizer(req.user, wiki).edit();
 
        if(authorized){
-         res.render("wikis/edit", {wiki});
+         res.render("wikis/edit", {wiki: wikiArray}); //something here!
        } else {
+         console.log(err)
          req.flash("You are not authorized to do that.")
          res.redirect(`/wikis/${req.params.id}`)
        }
