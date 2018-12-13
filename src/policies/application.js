@@ -1,8 +1,9 @@
 module.exports = class ApplicationPolicy {
 
-      constructor(user, record) {
+      constructor(user, record, collaborators) {
          this.user = user;
          this.record = record;
+         this.collaborators = collaborators;
       }
 
       _isOwner() {
@@ -40,4 +41,8 @@ module.exports = class ApplicationPolicy {
       destroy() {
       return this.update();
       }
+
+      showCollaborators() {
+        return this.edit();
+    }
    }

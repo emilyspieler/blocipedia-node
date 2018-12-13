@@ -10,17 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Wiki.belongsTo(models.User, {
       foreignKey: "userId",
-      onDelete: "CASCADE",
+      onDelete: "CASCADE"
     });
 
   Wiki.hasMany(models.Collaborator, {
     foreignKey: "wikiId",
-    as: "collaborators",
+    as: "collaborators"
   });
 };
 
 Wiki.prototype._isCollaborator= function() {
     return this.collaborators === 1;
+
     };
 
   return Wiki;

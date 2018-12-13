@@ -15,7 +15,7 @@ module.exports = {
      let newUser = {
        email: req.body.email, //form not sending body
        password: req.body.password,
-       passwordConfirmation: req.body.passwordConfirmation
+       passwordConfirmation: req.body.passwordConfirmation,
      };
 
      userQueries.createUser(newUser, (err, user) => {

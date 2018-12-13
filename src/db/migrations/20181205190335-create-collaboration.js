@@ -14,6 +14,9 @@ module.exports = {
       wikiId: {
         type: Sequelize.STRING
       },
+      role: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING
       },
@@ -28,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Collaborators');
+    return queryInterface.dropTable('Collaborator');
   }
 };

@@ -5,6 +5,7 @@ const Authorizer = require("../policies/wiki");
 const markdown = require( "markdown" ).markdown;
 const Wiki = require("../db/models").Wiki;
 const User = require("../db/models").User;
+const Collaborator = require("../db/models").Collaborator;
 
 module.exports = {
   index(req, res, next){
@@ -32,15 +33,18 @@ module.exports = {
 
   create(req, res, next){
     //verifies that collaborator is actually a user already registered.
-       User.findOne({where: {email: req.body.email}})
-          .then(user => {
+    User.findOne({where: {email: req.body.email}})
+       .then(user => {
+//updates their role so they can see ALL private wikis. Need them to just see the one with the wiki ID
 
       if (user) {
        let newCollaborator= {
          email: req.body.email,
          userId: req.user.id,
-         wikiId: req.params.wikiId
+         wikiId: req.params.wikiId,
        };
+
+Collaborator.update({role: 1}, { where: {wikiId: req.params.wikiId}, individualHooks: true});
 
        collaboratorQueries.addCollaborator(newCollaborator, (err, collaborator) => {
          if(err){
@@ -55,6 +59,7 @@ module.exports = {
         res.redirect("/wikis");
         }
       })
+
      },
 
   show(req, res, next){

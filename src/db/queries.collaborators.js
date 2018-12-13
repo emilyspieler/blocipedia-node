@@ -6,9 +6,7 @@ const Wiki = require("./models").Wiki;
 module.exports = {
 
   getAllCollaborators(callback){
-    console.log("DEBUG: collaboratorQuery#getAllCollaborators");
     return Collaborator.all()
-
     .then((collaborators) => {
       callback(null, collaborators);
     })
@@ -19,7 +17,6 @@ module.exports = {
 
 
   addCollaborator(newCollaborator, callback) {
-      console.log("DEBUG: collaboratorQuery#addCollaborator");
       return Collaborator.create(newCollaborator)
       .then((Collaborator) => {
         callback(null, Collaborator);
