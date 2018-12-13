@@ -1,12 +1,13 @@
 const User = require("./models").User;
-const Collaboration = require("./models").Collaboration;
+const Collaborator = require("./models").Collaborator;
 const bcrypt = require("bcryptjs");
 const Wiki = require("./models").Wiki;
 
 module.exports = {
 
   getAllCollaborators(callback){
-    return Collaboration.all()
+    console.log("DEBUG: collaboratorQuery#getAllCollaborators");
+    return Collaborator.all()
 
     .then((collaborators) => {
       callback(null, collaborators);
@@ -17,32 +18,33 @@ module.exports = {
   },
 
 
-addCollaboration(newCollaboration, callback){
-      return Collaboration.create(newCollaboration)
-      .then((collaboration) => {
-        callback(null, collaboration);
+  addCollaborator(newCollaborator, callback) {
+      console.log("DEBUG: collaboratorQuery#addCollaborator");
+      return Collaborator.create(newCollaborator)
+      .then((Collaborator) => {
+        callback(null, Collaborator);
       })
       .catch((err) => {
         callback(err);
       })
     },
 
-    getCollaboration(id, callback){
-      return Collaboration.findById(id)
-  .then((collaboration) => {
-    callback(null, collaboration);
+    getCollaborator(id, callback){
+      return Collaborator.findById(id)
+  .then((collaborator) => {
+    callback(null, collaborator);
   })
   .catch((err) => {
     callback(err);
   })
 },
 
-deleteCollaboration(id, callback){
-     return Collaboration.destroy({
+deleteCollaborator(id, callback){
+     return Collaborator.destroy({
        where: { id }
      })
-     .then((collaboration) => {
-       callback(null, collaboration);
+     .then((collaborator) => {
+       callback(null, collaborator);
      })
      .catch((err) => {
        callback(err);

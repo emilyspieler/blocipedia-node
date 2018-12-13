@@ -1,5 +1,5 @@
 const User = require("./models").User;
-const Collaboration = require("./models").Collaboration;
+const Collaborator = require("./models").Collaborator;
 const Downgrade = require("./models").Downgrade;
 const bcrypt = require("bcryptjs");
 

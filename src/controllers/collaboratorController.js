@@ -1,6 +1,6 @@
 const wikiQueries = require("../db/queries.wikis.js");
 const userQueries = require("../db/queries.users.js");
-const collaborationQueries = require("../db/queries.collaborators.js");
+const collaboratorQueries = require("../db/queries.collaborators.js");
 const Authorizer = require("../policies/wiki");
 const markdown = require( "markdown" ).markdown;
 const Wiki = require("../db/models").Wiki;
@@ -8,11 +8,11 @@ const User = require("../db/models").User;
 
 module.exports = {
   index(req, res, next){
-    collaborationQueries.getAllCollaborators((err, collaborations) => {
+    collaboratorQueries.getAllCollaborators((err, collaborators) => {
         if(err){
           res.redirect(500, "/");
         } else {
-          res.render("collaborations/index", {collaborations});
+          res.render("collaborators/index", {collaborators});
         }
       })
   },
@@ -22,11 +22,11 @@ module.exports = {
   const authorized = new Authorizer(req.user).new();
 
      if(authorized) {
-       res.render("collaborations/new", {wikiId: req.params.wikiId});
+       res.render("collaborators/new", {wikiId: req.params.wikiId});
 
     } else {
        req.flash("notice", "You are not authorized to do that.");
-       res.redirect(`/wikis/${wiki.Id}/collaborations/${collaboration.id}`);
+       res.redirect(`/wikis/${wiki.Id}/collaborators/${collaborator.id}`);
      }
   },
 
@@ -35,20 +35,19 @@ module.exports = {
        User.findOne({where: {email: req.body.email}})
           .then(user => {
 
-
       if (user) {
-       let newCollaboration= {
+       let newCollaborator= {
          email: req.body.email,
          userId: req.user.id,
          wikiId: req.params.wikiId
        };
 
-       collaborationQueries.addCollaboration(newCollaboration, (err, collaboration) => {
+       collaboratorQueries.addCollaborator(newCollaborator, (err, collaborator) => {
          if(err){
-           res.redirect(500, "/collaborations/new");
+           res.redirect(500, "/collaborators/new");
          } else {
-           res.render("collaborations/show",
-             {collaboration});
+           res.render("collaborators/show",
+             {collaborator});
            }
        });
          } else {
@@ -59,23 +58,23 @@ module.exports = {
      },
 
   show(req, res, next){
-       collaborationQueries.getCollaboration(req.params.id, (err, collaboration) => {
-         if(err || collaboration == null){
-
+       collaboratorQueries.getCollaborator(req.params.id, (err, collaborator) => {
+         if(err || collaborator == null){
+          console.log(err)
       res.redirect(404, "/");
     } else {
-      res.render("collaborations/show", {collaboration});
+      res.render("collaborators/show", {collaborator});
     }
   });
 },
 
 destroy(req, res, next){
 
- collaborationQueries.deleteCollaboration(req.params.id, (err, collaboration) => {
+ collaboratorQueries.deleteCollaborator(req.params.id, (err, collaborator) => {
    if(err){
-     res.redirect(err, `/wikis/${req.params.wikiId}/collaborations/${req.params.id}`)
+     res.redirect(err, `/wikis/${req.params.wikiId}/collaborators/${req.params.id}`)
    } else {
-     res.redirect(303, `/wikis/${req.params.wikiId}/collaborations/`)
+     res.redirect(303, `/wikis/${req.params.wikiId}/collaborators/`)
    }
  });
 },

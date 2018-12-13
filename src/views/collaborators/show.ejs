@@ -8,9 +8,9 @@
 
     <main class="container">
 
-      <p><%= collaboration.email %></h1> now has permission to edit your private wiki.
+      <p><%= collaborator.email %></h1> now has permission to edit your private wiki.
 
-      <form style="display:initial" action="/wikis/<%= collaboration.wikiId %>/collaborations/<%= collaboration.id %>/destroy" method="post">
+      <form style="display:initial" action="/wikis/<%= collaborator.wikiId %>/collaborators/<%= collaborator.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
       </form>
 

@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
     });
 
-  Wiki.hasMany(models.Collaboration, {
+  Wiki.hasMany(models.Collaborator, {
     foreignKey: "wikiId",
-    as: "collaborations",
+    as: "collaborators",
   });
 };
 
 Wiki.prototype._isCollaborator= function() {
-    return this.collaborations === 1;
+    return this.collaborators === 1;
     };
 
   return Wiki;

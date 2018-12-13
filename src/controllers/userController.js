@@ -4,7 +4,7 @@ const sgMail = require('@sendgrid/mail');
 const User = require('../db/models').User;
 const stripe = require("stripe")(process.env.stripeSecret);
 const Wiki = require("../db/models").Wiki;
-const Collaboration = require("../db/models").Collaboration;
+const Collaborator = require("../db/models").Collaborator;
 
 module.exports = {
   signUp(req, res, next){

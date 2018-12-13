@@ -11,10 +11,10 @@
 
       <ul class="list-group">
 
-  <% collaborations.forEach((collaboration) => { %>
+  <% collaborators.forEach((collaborator) => { %>
 
             <li class="list-group-item">
-              <a href="/wikis/<%= collaboration.wikiId %>/collaborations/<%= collaboration.id %>"> <%= collaboration.email %> </a>
+              <a href="/wikis/<%= collaborator.wikiId %>/collaborators/<%= collaborator.id %>"> <%= collaborator.email %> </a>
             </li>
 
           <% }) %>

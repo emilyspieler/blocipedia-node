@@ -13,15 +13,18 @@
 
 
         <% wikis.forEach((wiki) => { %>
-          <% if(wiki.private) { %>
-            <% if(currentUser) { %>
-            <% if(currentUser.isAdmin() || currentUser.isPremium() || currentUser.isCollaborator(wiki)) { %>
-            <li class="list-group-item">
-              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-            </li>
-            <% } %>
-            <% } %>
-
+          TESTING TESTING
+          <%= wiki %>
+          <%= currentUser.isCollaborator(wiki) %>
+            TESTING TESTING
+            <% if(wiki.private) { %>
+              <% if(currentUser) { %>
+              <% if(currentUser.isAdmin() || currentUser.isPremium()) { %>
+                <li class="list-group-item">
+                  <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+                </li>
+                <% } %>
+                <% } %>
 
             <% } else { %>
           <li class="list-group-item">

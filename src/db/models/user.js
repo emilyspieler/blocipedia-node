@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "wikis"
     });
 
-    User.hasMany(models.Collaboration, {
+    User.hasMany(models.Collaborator, {
       foreignKey: "userId",
       as: "collaborations"
     });
@@ -42,9 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       return this.role === 0;
       };
   User.prototype.isCollaborator = function(wiki) {
-      console.log(wiki)
+      console.log(wiki.collaborators)
       };
-
+//wiki.collaborators is undefined
 
   return User;
 };
