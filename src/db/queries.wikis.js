@@ -4,17 +4,22 @@ const Collaborator = require("./models").Collaborator;
 
 module.exports = {
 
-//#1
-  getAllWikis(callback){
-    return Wiki.all()
-    .then((wikis) => {
-
-      callback(null, wikis);
-    })
-    .catch((err) => {
-      callback(err);
-    })
-  },
+  getAllWikis(callback) {
+      return Wiki.all({
+        include: [
+          {
+            model: Collaborator,
+            as: "collaborators"
+          }
+        ]
+      })
+        .then(wikis => {
+          callback(null, wikis);
+        })
+        .catch(err => {
+          callback(err);
+        });
+    },
 
   addWiki(options, callback){
       return Wiki.create({

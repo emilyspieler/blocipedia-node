@@ -1,10 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Collaborator = sequelize.define('Collaborator', {
-    userId: DataTypes.INTEGER,
-    wikiId: DataTypes.INTEGER,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    wikiId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     email: DataTypes.STRING,
-    role: DataTypes.INTEGER
   }, {});
   Collaborator.associate = function(models) {
     // associations can be defined here

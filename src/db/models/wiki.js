@@ -4,7 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     private: DataTypes.BOOLEAN,
-    userId: DataTypes.INTEGER
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {});
   Wiki.associate = function(models) {
     // associations can be defined here

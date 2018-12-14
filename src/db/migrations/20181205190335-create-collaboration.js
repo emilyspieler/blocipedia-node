@@ -9,13 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       wikiId: {
-        type: Sequelize.STRING
-      },
-      role: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       email: {
         type: Sequelize.STRING

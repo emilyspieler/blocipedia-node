@@ -2,6 +2,8 @@ const wikiQueries = require("../db/queries.wikis.js");
 const Authorizer = require("../policies/wiki");
 const markdown = require( "markdown" ).markdown;
 const User = require("../db/models").User;
+const Wiki = require("../db/models").Wiki;
+const Collaborator = require("../db/models").Collaborator;
 
 module.exports = {
   index(req, res, next){
@@ -9,27 +11,34 @@ module.exports = {
     let wikiArray = [];
       wikiQueries.getAllWikis((err, wikis) => {
         if(err){
-          //if there's errors
+          console.log(err)
           res.redirect(500, "/");
         } else {
-          //if there isn't errors
+
           wikis.forEach(wiki => {
-            //loop through wikis
-            if (req.body.private) {
-              //if the wiki is private
-              if(wiki.collaborators) {
-                 //... and has a collab
-                wiki.collaborators.forEach(collaborator => {
-                     //loop through the collab and check the associations
-                  if((collaborator.userId == req.user.id && wiki.id == collaborator.wikiId) || req.user.role == 2 || req.user.id == wiki.userId){
-                      //push new array
-                    wikiArray.push(wiki)
-                  }
-                })
+
+            if (wiki.private) {
+
+              if (req.user.role == 2 || req.user.role == 1) {
+                wikiArray.push(wiki)
               }
-            }
+
+              else if(wiki.collaborators) {
+
+
+                wiki.collaborators.forEach(collaborator => {
+                  console.log("collab" + wiki.collaborators)
+
+
+                //  if(collaborator.userId == req.user.id && wiki.id == collaborator.wikiId || req.user.role == 2 || req.user.id == wiki.userId) {
+                      //push new array
+
+                    wikiArray.push(wiki)
+                  })
+                }
+              }
+
             else {
-              //OTHERWISE, if all of that other stuff doesn't apply, ie) wikis are public, then just push the wikis
               wikiArray.push(wiki)
             }
           })
@@ -77,11 +86,9 @@ module.exports = {
  show(req, res, next){
 
     wikiQueries.getWiki(req.params.id, (err, wiki) => {
-
       if(err || wiki == null){
         res.redirect(404, "/");
       } else {
-
         var description = markdown.toHTML(wiki.description);
          res.render("wikis/show",
           {wiki: wiki, htmlDescription: description});
@@ -105,15 +112,15 @@ edit(req, res, next){
 
    wikiQueries.getWiki(req.params.id, (err, wiki) => {
      if(err || wiki == null){
+       console.log("edit" + err);
+       //TypeError: Cannot read property '0' of undefined
        res.redirect(404, "/");
      } else {
 
-       const authorized = new Authorizer(req.user, wiki).edit();
-
-       if(authorized){
-         res.render("wikis/edit", {wiki: wikiArray}); //something here!
+       if(wiki){
+         res.render("wikis/edit", {wiki}); //something here!
        } else {
-         console.log(err)
+         console.log(err);
          req.flash("You are not authorized to do that.")
          res.redirect(`/wikis/${req.params.id}`)
        }

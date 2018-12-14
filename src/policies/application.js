@@ -23,12 +23,12 @@ module.exports = class ApplicationPolicy {
         }
 
         _isCollaborator() {
-          console.log("this error is" + this.record.collaborators)
-          return (
-            this.record.collaborators[0] && this.record.collaborators.find(collaborator => {
-          return (this.user.id == collaborator.userId)
-        })
-      );
+          console.log("application_policy_collab" + " " + "is" + " " + this.record.collaborators)
+        //  return (
+          //  this.record.collaborators[0] && this.record.collaborators.find(collaborator => {
+        //  return (this.user.id == collaborator.userId)
+    //    })
+  //    );
     }
 
       new() {
@@ -40,7 +40,7 @@ module.exports = class ApplicationPolicy {
       }
 
       edit() {
-        return this.record && (this._isOwner() || this._isAdmin() || this._isCollaborator());
+         return this.user != null;
       }
 
       update() {
