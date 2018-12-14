@@ -19,7 +19,7 @@ module.exports = {
 
             if (wiki.private) {
 
-              if (req.user.role == 2 || req.user.role == 1) {
+              if (req.user.role === 2 || req.user.role === 1) {
                 wikiArray.push(wiki)
               }
 
@@ -27,17 +27,14 @@ module.exports = {
 
 
                 wiki.collaborators.forEach(collaborator => {
-                  console.log("collab" + wiki.collaborators)
-
-
-                //  if(collaborator.userId == req.user.id && wiki.id == collaborator.wikiId || req.user.role == 2 || req.user.id == wiki.userId) {
-                      //push new array
+              
+      if (wiki.id === collaborator.wikiId && wiki.userId === collaborator.userId && collaborator.email === req.user.email) {
 
                     wikiArray.push(wiki)
+                    }
                   })
                 }
               }
-
             else {
               wikiArray.push(wiki)
             }

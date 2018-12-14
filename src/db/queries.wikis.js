@@ -1,6 +1,7 @@
 const Wiki = require("./models").Wiki;
 const Authorizer = require("../policies/wiki");
 const Collaborator = require("./models").Collaborator;
+const User = require("./models").User;
 
 module.exports = {
 
@@ -10,7 +11,7 @@ module.exports = {
           {
             model: Collaborator,
             as: "collaborators"
-          }
+          }    
         ]
       })
         .then(wikis => {

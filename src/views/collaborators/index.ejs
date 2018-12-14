@@ -11,13 +11,15 @@
 
       <ul class="list-group">
 
-  <% collaborators.forEach((collaborator) => { %>
+        <% if(currentUser) { %>
+        <% collaborators.forEach((collaborator) => { %>
 
             <li class="list-group-item">
               <a href="/wikis/<%= collaborator.wikiId %>/collaborators/<%= collaborator.id %>"> <%= collaborator.email %> </a>
             </li>
 
           <% }) %>
+          <% } %>
 
       </ul>
 
