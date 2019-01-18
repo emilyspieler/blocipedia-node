@@ -22,15 +22,15 @@
          <form method="POST" action="/users/<%= currentUser.id %>/downgrade"> <!--- something here --->
            <div class="form-group">
              <label>Name on Credit Card:</label>
-             <input type="text" name="name" placeholder="Enter Name" class="form-control"/>
+             <input type="text" name="name" placeholder="Enter Name" class="form-control" required/>
            </div>
            <div class="form-group">
              <label>Email:</label>
-             <input type="email" name="email" placeholder="Enter Email" class="form-control"/>
+             <input type="email" name="email" placeholder="Enter Email" class="form-control" required/>
            </div>
            <div class="form-group">
              <label>Reason For Leaving:</label>
-             <input type="description" name="description" placeholder="description" class="form-control"/>
+             <input type="description" name="description" placeholder="description" class="form-control" required/>
            </div>
            <br/>
            <input type="submit" value="Downgrade" class="btn btn-primary"/>

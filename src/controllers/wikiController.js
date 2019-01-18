@@ -25,10 +25,9 @@ module.exports = {
 
               else if(wiki.collaborators) {
 
-
                 wiki.collaborators.forEach(collaborator => {
-              
-      if (wiki.id === collaborator.wikiId && wiki.userId === collaborator.userId && collaborator.email === req.user.email) {
+
+      if (collaborator.email === req.user.email) {
 
                     wikiArray.push(wiki)
                     }
