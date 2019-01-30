@@ -6,11 +6,12 @@
   <body>
     <% include ../static/partials/navbar.ejs %>
 
+
     <main class="container">
 
+<header class="jumbotron my-4">
       <h1>Edit Wiki</h1>
 
-<!--- Regular edit form --->
       <form action="/wikis/<%= wiki.id %>/update" method="post">
         <div class="form-group">
           <label for="title">Wiki Title</label>
@@ -25,6 +26,7 @@
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
     </main>
+  </header>
 
   </body>
 </html>

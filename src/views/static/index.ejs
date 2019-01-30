@@ -16,7 +16,11 @@
         <header class="jumbotron my-4">
           <h1 class="display-3">Bloccipedia</h1>
           <p class="lead">An application for users to search information.</p>
-          <button><a class="nav-link" href="/users/sign_up">Sign Up To View Wikis!</a></button>
+            <% if(currentUser) { %>
+              <button><a class="nav-link" href="/wikis">View Wikis!</a></button>
+            <% } else { %>
+              <button><a class="nav-link" href="/users/sign_up">Sign Up To View Wikis!</a></button>
+                <% }%>
         </header>
 
       </main>
