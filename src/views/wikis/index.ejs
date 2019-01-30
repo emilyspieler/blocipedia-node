@@ -13,6 +13,11 @@
 
       <ul class="list-group">
 
+        <% if(currentUser.isAdmin() || currentUser.isPremium()) { %>
+
+
+        <a href="/wikis/new" class="btn btn-success">New Wiki</a>
+        <% } %>
 
         <% wikiArray.forEach((wiki) => { %>
 
