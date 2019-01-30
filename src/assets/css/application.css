@@ -33,3 +33,12 @@ ul {
 li {
   font-family: 'Playfair Display', serif;
 }
+
+header.jumbotron.my-4{
+  background-color: white;
+}
+
+button {
+  background-color: yellow;
+  border: .5px solid black;
+}
