@@ -104,7 +104,7 @@ module.exports = {
          to: 'emilyspieler1@gmail.com',
          from: 'test@example.com',
          cc: 'espielerphotography@gmail.com',
-         subject:  'this is the subject',
+         subject:  'You have subscribed',
          text: 'Please refund their credit card',
          html: '<strong>and easy to do anywhere, even with Node.js</strong>',
        };
