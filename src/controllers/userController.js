@@ -103,6 +103,7 @@ module.exports = {
        const msg = {
          to: 'emilyspieler1@gmail.com',
          from: 'test@example.com',
+         cc: 'espielerphotography@gmail.com',
          subject:  'this is the subject',
          text: 'Please refund their credit card',
          html: '<strong>and easy to do anywhere, even with Node.js</strong>',
