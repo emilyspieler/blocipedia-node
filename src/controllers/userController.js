@@ -99,22 +99,22 @@ module.exports = {
 
  })
 
-       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-       const msg = {
-         to: 'emilyspieler1@gmail.com',
-         from: 'test@example.com',
-         cc: 'espielerphotography@gmail.com',
-         subject:  'You have subscribed',
-         text: 'Please refund their credit card',
-         html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-       };
-
-          sgMail.send(msg).then( () => {
-            console.log("Successfully Sent Mail!");
-          })
-          .catch( error => {
-            console.error(error.toString());
-          });
+       // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+       // const msg = {
+       //   to: 'emilyspieler1@gmail.com',
+       //   from: 'test@example.com',
+       //   cc: 'espielerphotography@gmail.com',
+       //   subject:  'You have subscribed',
+       //   text: 'Please refund their credit card',
+       //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+       // };
+       //
+       //    sgMail.send(msg).then( () => {
+       //      console.log("Successfully Sent Mail!");
+       //    })
+       //    .catch( error => {
+       //      console.error(error.toString());
+       //    });
 
        userQueries.createDowngrade(newDowngrade, (err, user) => {
          if(err){
